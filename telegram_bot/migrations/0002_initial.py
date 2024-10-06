@@ -8,7 +8,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('TelegramBot', '0001_initial'),
+        ('telegram_bot', '0001_initial'),
     ]
 
     operations = [

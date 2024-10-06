@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('TelegramBot', '0002_initial'),
+        ('telegram_bot', '0002_initial'),
     ]
 
     operations = [
@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
                 ('name', models.TextField()),
                 ('limit', models.DecimalField(decimal_places=2, max_digits=10)),
                 ('balance', models.DecimalField(decimal_places=2, max_digits=10)),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='TelegramBot.user')),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='telegram_bot.user')),
             ],
         ),
         migrations.CreateModel(
@@ -27,7 +27,7 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('status', models.TextField(choices=[('outlay', 'Outlay'), ('income', 'Income')])),
                 ('created_at', models.DateField()),
-                ('account', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='TelegramBot.account')),
+                ('account', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='telegram_bot.account')),
             ],
         ),
     ]

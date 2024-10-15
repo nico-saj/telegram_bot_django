@@ -21,8 +21,16 @@ class Command(BaseCommand):
             entry_points=[CommandHandler("start", start)],
             states={
                 # MAIN_MENU: [CommandHandler("start", start)],
-                MAIN_MENU_SELECT: [CallbackQueryHandler(start_menu_handler)],
+                MAIN_MENU_SELECT: [CallbackQueryHandler(main_menu_handler)],
+
                 ACCOUNT_CREATE: [MessageHandler(filters.TEXT, account_create)],
+                ACCOUNT_OPEN: [CallbackQueryHandler(account_open)],
+
+                ACCOUNT_MENU_SELECT: [CallbackQueryHandler(account_menu_handler)],
+
+                ACCOUNT_SET_LIMIT: [MessageHandler(filters.TEXT, account_set_limit)],
+                ACCOUNT_SET_BALANCE: [MessageHandler(filters.TEXT, account_set_balance)]
+
                 # PHOTO: [MessageHandler(filters.PHOTO, photo), CommandHandler("skip", skip_photo)],
                 # LOCATION: [
                 #     MessageHandler(filters.LOCATION, location),

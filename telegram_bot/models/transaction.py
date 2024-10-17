@@ -6,7 +6,9 @@ class Transaction(models.Model):
         INCOME = "income"
 
     status = models.TextField(choices=Status)
-    created_at = models.DateField()
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    evaluated_at = models.DateTimeField()
+    comment = models.TextField()
 
     account = models.ForeignKey('Account', on_delete=models.CASCADE)
 

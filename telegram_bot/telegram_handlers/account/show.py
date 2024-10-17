@@ -1,4 +1,3 @@
-from asgiref.sync import sync_to_async
 from telegram.ext import ContextTypes
 from telegram import Update
 
@@ -8,7 +7,7 @@ from telegram_bot.telegram_handlers.account.menu import *
 
 async def account_open(update: Update, context: ContextTypes.DEFAULT_TYPE):
     context.user_data['selected_account_id'] = update.callback_query.data
-    account = await sync_to_async(Account.objects.get, thread_sensitive=True)(id=context.user_data['selected_account_id'])
+    account = await Account.objects.aget(id=context.user_data['selected_account_id'])
 
     query = update.callback_query
     await query.answer()

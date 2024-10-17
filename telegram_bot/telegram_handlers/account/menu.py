@@ -22,14 +22,35 @@ async def account_menu_handler(update: Update, context: ContextTypes.DEFAULT_TYP
         case 'set_account_balance':
             await context.bot.send_message(chat_id=update.effective_chat.id, text=f"Input account balance:")
             return ACCOUNT_SET_BALANCE
-        case 'create_transaction':
-            return await create_transaction__account_menu_option(update, context)
+        case 'create_outlay_transaction':
+            context.user_data['transaction_status'] = 'outlay'
+            await context.bot.send_message(chat_id=update.effective_chat.id, text=f"Input transaction amount:")
+            return TRANSACTION_SET_AMOUNT
+        case 'create_income_transaction':
+            context.user_data['transaction_status'] = 'income'
+            await context.bot.send_message(chat_id=update.effective_chat.id, text=f"Input transaction amount:")
+            return TRANSACTION_SET_AMOUNT
         case 'remove_transaction':
-            return await remove_transaction__account_menu_option(update, context)
+            await context.bot.send_message(chat_id=update.effective_chat.id, text=f"Input transaction date in format 'YYYY-MM-DD':")
+            return TRANSACTION_REMOVE_LIST
         case 'show_transactions':
-            return await create_transaction__account_menu_option(update, context)
+            await context.bot.send_message(chat_id=update.effective_chat.id, text=f"Input transactions date range in format 'YYYY-MM-DD - YYYY-MM-DD':")
+            return TRANSACTIONS_INDEX
         case 'delete_account':
-            return await delete_account__account_menu_option(update, context)
+            account = await Account.objects.aget(id=context.user_data['selected_account_id'])
+            del context.user_data['selected_account_id']
+
+            query = update.callback_query
+            await query.answer()
+            await query.edit_message_text(text=f"Selected account for delete: {account.name}")
+
+            await account.adelete()
+
+            await context.bot.send_message(chat_id=update.effective_chat.id,
+                                           text=f"Account deleted!",
+                                           reply_markup=start_menu())
+
+            return MAIN_MENU_SELECT
         case 'main_menu':
             await context.bot.send_message(chat_id=update.effective_chat.id, text=f"Select menu option:", reply_markup=start_menu())
             return MAIN_MENU_SELECT

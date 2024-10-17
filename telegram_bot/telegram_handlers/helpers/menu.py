@@ -18,17 +18,20 @@ def account_menu():
             {'label': 'Set account balance', 'callback': 'set_account_balance'},
         ],
         [
-            {'label': 'Add transaction', 'callback': 'create_transaction'},
+            {'label': 'Add outlay transaction', 'callback': 'create_outlay_transaction'},
+            {'label': 'Add income transaction', 'callback': 'create_income_transaction'},
+        ],
+        [
             {'label': 'Remove transaction', 'callback': 'remove_transaction'},
         ],
         [
             {'label': 'Show statistics', 'callback': 'show_transactions'},
         ],
         [
-            {'label': 'DANGEROUS! Delete account', 'callback': 'delete_account'}
+            {'label': 'DANGEROUS! Delete account', 'callback': 'delete_account'},
         ],
         [
-            {'label': 'Take back to Main Menu', 'callback': 'main_menu'}
+            {'label': 'Take back to Main Menu', 'callback': 'main_menu'},
         ]
     ]
     return generate_menu(keyboard_values)

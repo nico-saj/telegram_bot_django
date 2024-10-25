@@ -19,9 +19,14 @@ async def transaction_set_date(update: Update, context: ContextTypes.DEFAULT_TYP
 
 async def transaction_set_comment(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await Transaction.objects.acreate(account_id=context.user_data['selected_account_id'],
-                                      amount=context.user_data['transaction_amount'],
+                                      status=context.user_data['transaction_status'],
+                                      amount=abs(int(context.user_data['transaction_amount'])),
                                       evaluated_at=context.user_data['transaction_date'],
                                       comment=update.message.text)
+    account = await Account.objects.aget(id=context.user_data['selected_account_id'])
+    transaction_amount = context.user_data['transaction_amount'] if context.user_data['transaction_status'] == 'income' else -abs(int(context.user_data['transaction_amount']))
+    new_balance = account.balance + transaction_amount
+    await Account.objects.filter(id=context.user_data['selected_account_id']).aupdate(balance=new_balance)
     await context.bot.send_message(chat_id=update.effective_chat.id,
                                    text=f"Transaction created!",
                                    reply_markup=account_menu())
